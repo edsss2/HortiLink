@@ -1,5 +1,7 @@
 package com.devf.hortilink.entity;
 
+import com.devf.hortilink.enums.Role;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,16 +14,26 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String nome;
-	
+
 	@Column(unique = true)
 	private String email;
-	
+
 	private String senha;
+
+	private Role role;
 
 	public Long getId() {
 		return id;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public void setId(Long id) {
@@ -51,7 +63,5 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
-	
-	
+
 }
