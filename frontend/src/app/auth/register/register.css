@@ -1,7 +1,9 @@
-/* Note que o caminho da URL é relativo ao arquivo CSS/SCSS */
-.register-background {
-    background-image: url('../../../assets/bgRegistreHortLink.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
 }
