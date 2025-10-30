@@ -10,7 +10,8 @@ export class UsuarioService {
   currentUser$ = this.currentUser.asObservable();
 
   getCurrentUser() : Usuario | null {
-    return this.currentUser.value;
+    const user = this.currentUser.value;
+    return user;
   }
 
   setCurrentUser(usuario: Usuario | null) {

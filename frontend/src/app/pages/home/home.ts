@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Navbar } from '../../components/navbar/navbar.components';
+import { Navbar } from '../../components/navbar/navbar.component';
+import { UsuarioService } from '../../services/usuario-service';
+import { Usuario } from '../../models/usuario.model';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +10,10 @@ import { Navbar } from '../../components/navbar/navbar.components';
   styleUrl: './home.css',
 })
 export class Home {
+  constructor(private usuarioService : UsuarioService) {}
 
-  nomeDoUsuario = 'Edson';
+  get usuarioLogado() {
+
+    return this.usuarioService.getCurrentUser();
+  }
 }
