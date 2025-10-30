@@ -1,49 +1,63 @@
 <div
   class="bg-[url('/assets/bgRegistreHortLink.png')] bg-no-repeat bg-cover bg-center h-screen w-full flex items-center justify-center">
-  
   <div
-    class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-    
-    <form class="space-y-6" action="#">
+    class="w-full max-w-lg p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <form class="space-y-6" #registerForm="ngForm" (ngSubmit)="onSubmit()">
       <h3 class="text-2xl font-medium text-gray-900 dark:text-white text-center">Registre-se</h3>
 
+      <div class="flex gap-4">
+        <div class="flex-1">
+          <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seu nome</label>
+          <input type="text" name="nome" id="name"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+            placeholder="Nome" [(ngModel)]="usuario.nome" required />
+        </div>
+        <div class="flex-1">
+          <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Celular</label>
+          <input type="tel" id="phone" mask="(00) 0000-0000||(00) 00000-0000" name="telefone"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="(00) 00000-0000" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" [(ngModel)]="usuario.telefone"
+            required />
+        </div>
+      </div>
+
       <div>
-        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+        <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de conta</label>
+        <select id="role" name="role"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          [(ngModel)]="usuario.role" required>
+          <option [ngValue]="null" disabled>Selecione um tipo de conta</option>
+          <option value="CONSUMIDOR">Consumidor</option>
+          <option value="PRODUTOR">Produtor</option>
+          <option value="COMERCIO">Comércio</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seu email</label>
         <input type="email" name="email" id="email"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
-                 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 
-                 dark:placeholder-gray-400 dark:text-white"
-          placeholder="name@company.com" required />
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          placeholder="nome@gmail.com" [(ngModel)]="usuario.email" required />
       </div>
 
       <div>
-        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-        <input type="password" name="password" id="password" placeholder="••••••••"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
-                 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 
-                 dark:placeholder-gray-400 dark:text-white" required />
-      </div>
-
-      <div class="flex items-start justify-between">
-        <label class="flex items-center text-sm font-medium text-gray-900 dark:text-gray-300">
-          <input id="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 
-            focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600"/>
-          <span class="ml-2">Remember me</span>
-        </label>
-        <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Lost Password?</a>
+        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sua senha</label>
+        <input type="password" name="senha" id="password" placeholder="••••••••"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          [(ngModel)]="usuario.senha" required />
       </div>
 
       <button type="submit"
-        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none 
-               focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center 
-               dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        Login to your account
+        class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+        Registre-se
       </button>
 
       <div class="text-sm font-medium text-gray-500 dark:text-gray-300 text-center">
-        Not registered? <a href="#" class="text-blue-700 hover:underline dark:text-blue-500">Create account</a>
+        Possui uma conta?
+        <a routerLink="/login" routerLinkActive="active"
+          class="text-blue-700 hover:underline dark:text-blue-500">Login</a>
       </div>
     </form>
   </div>
-
 </div>

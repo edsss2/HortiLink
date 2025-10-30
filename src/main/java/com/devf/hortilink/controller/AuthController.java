@@ -31,11 +31,12 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getSenha())
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getSenha())
             );
 
-            String token = jwtUtil.generateToken(request.getUsername());
-            return ResponseEntity.ok(new AuthResponse(token));
+            String token = jwtUtil.generateToken(request.getEmail());
+            Usuario usuarioLogado = usuarioService.buscarPorEmail(request.getEmail());
+            return ResponseEntity.ok(new AuthResponse(token, usuarioLogado));
 
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha inválidos");
@@ -44,23 +45,24 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Usuario usuario) {
-    	System.out.println("Entou nesse método");
         usuarioService.salvar(usuario); // implemente para salvar com senha criptografada
         return ResponseEntity.ok("Usuário registrado com sucesso!");
     }
 }
 
 class AuthRequest {
-    private String username;
+    private String email;
     private String senha;
-    public String getUsername(){return username;}
-    public void setUsername(String username){this.username = username;}
+    public String getEmail(){return email;}
+    public void setEmail(String email){this.email = email;}
     public String getSenha(){return senha;}
     public void setSenha(String senha){this.senha = senha;}
 }
 
 class AuthResponse {
     private String token;
-    public AuthResponse(String token){this.token = token;}
+    private Usuario usuario;
+    public AuthResponse(String token, Usuario usuario){this.token = token;this.usuario = usuario;}
     public String getToken(){return token;}
+    public Usuario getUsuario() {return usuario;}
 }

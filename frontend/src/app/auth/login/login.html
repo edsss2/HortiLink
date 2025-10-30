@@ -2,9 +2,9 @@
   class="bg-[url('/assets/bgHortlink.png')] bg-no-repeat bg-cover bg-center h-screen w-full flex items-center justify-center">
   
   <div
-    class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+    class="w-full max-w-lg p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
     
-    <form class="space-y-6" action="#">
+    <form class="space-y-6" (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <h3 class="text-2xl font-medium text-gray-900 dark:text-white text-center">Login</h3>
 
       <div>
@@ -13,15 +13,17 @@
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
                  focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 
                  dark:placeholder-gray-400 dark:text-white"
+          [(ngModel)]="loginRequest.email"
           placeholder="nome@gmail.com" required />
-      </div>
+      </div>  
 
       <div>
         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sua senha</label>
         <input type="password" name="password" id="password" placeholder="••••••••"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
                  focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 
-                 dark:placeholder-gray-400 dark:text-white" required />
+                 dark:placeholder-gray-400 dark:text-white" 
+                [(ngModel)]="loginRequest.senha" required />
       </div>
 
       <div class="flex items-start justify-between">
@@ -36,12 +38,13 @@
       <button type="submit"
         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none 
                focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center 
-               dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+               dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              [disabled]="loginForm.invalid">
         Faça login na sua conta
       </button>
 
       <div class="text-sm font-medium text-gray-500 dark:text-gray-300 text-center">
-        Não possui conta? <a href="#" class="text-blue-700 hover:underline dark:text-blue-500">Registre-se</a>
+        Não possui conta? <a routerLink="/register" routerLinkActive="active" class="text-blue-700 hover:underline dark:text-blue-500">Registre-se</a>
       </div>
     </form>
   </div>

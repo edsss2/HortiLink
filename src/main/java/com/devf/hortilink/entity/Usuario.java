@@ -16,6 +16,7 @@ public class Usuario {
 	private Long id;
 
 	private String nome;
+	private String telefone;
 
 	@Column(unique = true)
 	private String email;
@@ -26,6 +27,14 @@ public class Usuario {
 
 	public Long getId() {
 		return id;
+	}
+	
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 	public Role getRole() {

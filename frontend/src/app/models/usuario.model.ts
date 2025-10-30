@@ -2,8 +2,9 @@ import { Role } from "./role";
 
 export interface Usuario {
     id?:number;
-    username:string;
+    telefone:string;
+    email:string;
     nome:string;
     senha:string;
-    role:Role;
+    role:Role | null;
 }
