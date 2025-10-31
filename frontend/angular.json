@@ -25,8 +25,12 @@
               }
             ],
             "styles": [
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/custom-theme.scss",
               "src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/flowbite/dist/flowbite.min.js"
             ]
           },
           "configurations": {
@@ -83,7 +87,11 @@
               }
             ],
             "styles": [
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/flowbite/dist/flowbite.min.js"
             ]
           }
         }
@@ -94,3 +102,4 @@
     "analytics": "67a46e15-e1cc-4045-918a-aabc9b5b1368"
   }
 }
+
