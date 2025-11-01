@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario-service';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-navbar',
@@ -10,8 +11,10 @@ import { UsuarioService } from '../../services/usuario-service';
 })
 export class Navbar implements OnInit{
   usuarioLogado: Usuario | null = null;
+  @Input() nomeUsuario!: string;
+  @Input() emailUsuario!: string;
 
-  constructor(private usuarioService: UsuarioService) {}
+  constructor(private usuarioService: UsuarioService, private authService : AuthService) {}
 
   ngOnInit(): void {
     // Se inscreve para receber atualizações do usuário
@@ -29,5 +32,9 @@ export class Navbar implements OnInit{
     }
       console.log("🔄 Navbar atualizado:", user);
     });
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

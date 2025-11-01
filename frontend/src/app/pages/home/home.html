@@ -1,5 +1,10 @@
-<app-navbar></app-navbar>
-
+@if(usuarioLogado != null) {
+  <app-navbar [nomeUsuario]="usuarioLogado.nome" [emailUsuario]="usuarioLogado.email"></app-navbar>
+} @else {
+  <app-navbar [nomeUsuario]="'not found'" [emailUsuario]="'Sem email'"></app-navbar>
+}
 <h1 class="text-3xl font-bold underline">
   Hello world!
 </h1>
+
+<app-footer></app-footer>

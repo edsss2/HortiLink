@@ -1,4 +1,4 @@
-<nav class=" border-gray-200 bg-[#2E7D32]">
+<nav class=" border-gray-200 bg-green-primary">
   <div class="max-w-7xl p-4 mx-auto flex items-center justify-between gap-6">
     <div class="flex gap-3 items-center space-x-3">
       <img src="/assets/logo.png" alt="Hortlink Logo" class="h-8">
@@ -26,7 +26,7 @@
 
       <!-- BOTÃO -->
       <button type="submit"
-        class="absolute right-2 top-1/2 -translate-y-1/2 text-[#2E7D32] border-2 border-[#2E7D32] bg-[#e8f5e8] hover:bg-[#2E7D32] hover:text-white font-medium rounded-full text-sm px-4 py-1 transition-colors duration-200">
+        class="absolute right-2 top-1/2 -translate-y-1/2 text-[#2E7D32] border-2 border-[#2E7D32] bg-green-secundary hover:bg-[#2E7D32] hover:text-white font-medium rounded-full text-sm px-4 py-1 transition-colors duration-200">
         Buscar
       </button>
 
@@ -41,12 +41,12 @@
       </button>
       <div id="user-dropdown" class="z-50 hidden my-4 text-base list-none bg-gray-600 rounded-lg shadow-sm">
         <div class="px-4 py-3">
-          <span class="block text-sm text-gray-200">Edson</span>
-          <span class="block text-sm truncate text-gray-400">edsonveiga@gmail.com</span>  
+          <span class="block text-sm text-gray-200">{{ nomeUsuario }}</span>
+          <span class="block text-sm truncate text-gray-400">{{ emailUsuario }}</span>  
         </div>
         <ul class="py-2" aria-labelledby="user-menu-button">
           <li>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-400 ">Sign out</a>
+            <a (click)="logout()" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-400 ">Sign out</a>
           </li>
         </ul>
       </div>
