@@ -36,7 +36,8 @@ public class Usuario {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = true)
 	private ComercioProfile comercioProfile;
 	
-	
+	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private Foto foto;
 	
 	
 	//Getters e Setters
@@ -44,6 +45,14 @@ public class Usuario {
 		return id;
 	}
 	
+	public Foto getFoto() {
+		return foto;
+	}
+
+	public void setFoto(Foto foto) {
+		this.foto = foto;
+	}
+
 	public Endereco getEndereco() {
 		return endereco;
 	}

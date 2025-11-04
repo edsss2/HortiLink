@@ -32,12 +32,21 @@ public class ComercioProfile {
 	@OneToMany(mappedBy = "comercio", cascade = CascadeType.ALL)
     private List<Oferta> ofertas;
 
-	
+	@OneToMany(mappedBy = "comercioProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Foto> fotos;
 	
 	
 	//Getters e Setters
 	public Long getId() {
 		return id;
+	}
+
+	public List<Foto> getFotos() {
+		return fotos;
+	}
+
+	public void setFotos(List<Foto> fotos) {
+		this.fotos = fotos;
 	}
 
 	public void setId(Long id) {
