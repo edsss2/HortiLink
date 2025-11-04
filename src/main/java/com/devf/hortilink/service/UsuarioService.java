@@ -2,8 +2,13 @@ package com.devf.hortilink.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+import com.devf.hortilink.entity.Endereco;
+import com.devf.hortilink.entity.Foto;
 import com.devf.hortilink.entity.Usuario;
 
+@Service
 public interface UsuarioService {
 
 	List<Usuario> listarTodos();
@@ -11,4 +16,7 @@ public interface UsuarioService {
 	Usuario buscarPorEmail(String email);
 	Usuario excluirPorId(Long id);
 	Usuario salvar(Usuario usuario);
+	Foto buscarFotoPorId(Long id);
+	void atualizarEndereco(Long id, Endereco endereco);
+	void atualizarFoto(Long id, Foto foto);
 }

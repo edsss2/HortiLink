@@ -1,0 +1,98 @@
+package com.devf.hortilink.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.devf.hortilink.entity.ComercioProfile;
+import com.devf.hortilink.entity.Foto;
+import com.devf.hortilink.entity.Oferta;
+import com.devf.hortilink.entity.Produto;
+import com.devf.hortilink.repository.ComercioProfileRepository;
+import com.devf.hortilink.repository.OfertaRepository;
+import com.devf.hortilink.service.ComercioProfileService;
+import com.devf.hortilink.service.ProdutoService;
+
+@Service
+public class ComercioProfileServiceImpl implements ComercioProfileService {
+
+	@Autowired
+	private ComercioProfileRepository repository;
+	
+	@Autowired
+	private OfertaRepository ofertaRepository;
+	
+	@Autowired
+	private ProdutoService produtoService;
+
+	@Override
+	public List<ComercioProfile> listarTodos() {
+		return repository.findAll();
+	}
+
+	@Override
+	public ComercioProfile buscarPorId(Long id) {
+		return repository.findById(id).orElseThrow(
+				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comércio não encontrado com o ID: " + id));
+	}
+
+	@Override
+	public ComercioProfile excluirPorId(Long id) {
+		ComercioProfile comercio = buscarPorId(id);
+		repository.delete(comercio);
+		return comercio;
+	}
+
+	@Override
+	public ComercioProfile salvar(ComercioProfile comercioProfile) {
+		return repository.save(comercioProfile);
+	}
+
+	@Override
+	public List<Foto> buscarFotosPorId(Long id) {
+		ComercioProfile comercio = buscarPorId(id);
+		return comercio.getFotos();
+	}
+
+	@Override
+	public List<Oferta> buscarOfertasPorId(Long id) {
+		ComercioProfile comercio = buscarPorId(id);
+		return comercio.getOfertas();
+	}
+
+	@Override
+	public Oferta buscarOfertaPorId(Long idOferta) {
+		return ofertaRepository.findById(idOferta).orElseThrow(
+				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Oferta não encontrada com o ID: " + idOferta));
+	}
+
+	@Override
+	public Oferta editarOferta(Long idOferta, Oferta oferta) {
+		Oferta ofertaBanco = buscarOfertaPorId(idOferta);
+		
+		ofertaBanco.setEstoqueAtual(oferta.getEstoqueAtual());
+		ofertaBanco.setPromocao(oferta.getPromocao());
+		ofertaBanco.setDisponivelParaVenda(oferta.getDisponivelParaVenda());
+		ofertaBanco.setValor(oferta.getValor());
+
+		return ofertaRepository.save(ofertaBanco);
+	}
+
+	@Override
+	public Oferta adicionarOferta(Long id, Long idProduto, Oferta oferta) {
+		ComercioProfile comercio = buscarPorId(id);
+		Produto produto = produtoService.buscarPorId(idProduto);
+		
+		comercio.add
+		
+	}
+
+	@Override
+	public Oferta excluirOferta(Long idOferta) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

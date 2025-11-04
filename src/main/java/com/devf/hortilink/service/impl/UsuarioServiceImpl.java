@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.devf.hortilink.entity.Endereco;
+import com.devf.hortilink.entity.Foto;
 import com.devf.hortilink.entity.Usuario;
 import com.devf.hortilink.repository.UsuarioRepository;
 import com.devf.hortilink.service.UsuarioService;
@@ -49,6 +51,27 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public Usuario salvar(Usuario usuario) {
 		usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
 		return repository.save(usuario);
+	}
+	
+	@Override
+	public Foto buscarFotoPorId(Long id) {
+		Usuario usuario = repository.findById(id).orElseThrow(
+				() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado com ID: " + id));
+		
+		return usuario.getFoto();
+	}
+
+	@Override
+	public void atualizarEndereco(Long id, Endereco endereco) {
+		Usuario usuario = buscarPorId(id);
+		usuario.setEndereco(endereco);
+		
+	}
+
+	@Override
+	public void atualizarFoto(Long id, Foto foto) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -39,7 +39,7 @@ public class Produto {
 	private LocalDate dataColheita;
 	
 
-	private Boolean certificadoOrganico;
+	private Boolean certificadoOrganico = false;
 	
 	@Enumerated(EnumType.STRING)
 	@NotNull

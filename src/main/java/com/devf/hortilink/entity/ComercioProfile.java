@@ -36,6 +36,18 @@ public class ComercioProfile {
     private List<Foto> fotos;
 	
 	
+	public void addOferta(Oferta oferta) {
+		this.ofertas.add(oferta);
+	}
+	
+	public void removeOferta(Oferta oferta) {
+		this.ofertas.remove(oferta);
+	}
+	
+	public void removeOferta(Long idOferta) {
+;
+	}
+	
 	//Getters e Setters
 	public Long getId() {
 		return id;
