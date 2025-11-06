@@ -45,7 +45,7 @@ public class ComercioProfile {
 	}
 	
 	public void removeOferta(Long idOferta) {
-;
+		this.ofertas.removeIf(oferta -> oferta.getId().equals(idOferta));
 	}
 	
 	//Getters e Setters

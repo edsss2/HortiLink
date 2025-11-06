@@ -81,4 +81,6 @@ public class ComercioProfileController {
 		return ResponseEntity.ok(ofertas);
 	}
 	
+	
+	
 }

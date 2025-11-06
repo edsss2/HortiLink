@@ -86,7 +86,11 @@ public class ComercioProfileServiceImpl implements ComercioProfileService {
 		ComercioProfile comercio = buscarPorId(id);
 		Produto produto = produtoService.buscarPorId(idProduto);
 		
-		comercio.add
+		comercio.addOferta(oferta);
+		oferta.setProduto(produto);
+		oferta.setComercio(comercio);
+		
+		return ofertaRepository.save(oferta);
 		
 	}
 
