@@ -33,8 +33,13 @@
     </form>
 
     <div class="flex items-center space-x-3">
-      <button class="max-w-10 max-h-10">
-        <i class="fas fa-cart-shopping text-white text-xl"></i>
+      <button class="max-w-10 max-h-10 relative"> <i class="fas fa-cart-shopping text-white text-xl"></i>
+
+        @if (carrinhoCount > 0) {
+          <span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full border-2 border-white">
+            {{ carrinhoCount }}
+          </span>
+        }
       </button>
     <button class="flex text-sm rounded-full focus:ring-4 focus:ring-green-light md:me-0" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
         <img class="w-10 h-10 rounded-full" src="/assets/perfil_not_found.png" alt="user photo">
@@ -46,7 +51,7 @@
         </div>
         <ul class="py-2" aria-labelledby="user-menu-button">
           <li>
-            <a (click)="logout()" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-400 ">Sign out</a>
+            <a (click)="logout()" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-400 ">Sair</a>
           </li>
         </ul>
       </div>
