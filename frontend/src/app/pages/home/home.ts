@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Navbar } from '../../components/navbar/navbar.component';
 import { UsuarioService } from '../../services/usuario-service';
 import { Usuario } from '../../models/usuario.model';
 import { Footer } from "../../components/footer/footer.component";
 import { Produto } from '../../models/produto.model';
 import { FarmerIcon } from '../../icons/farmer-icon/farmer-icon';
+import { ProdutoService } from '../../services/produto-service';
 
 @Component({
   selector: 'app-home',
@@ -12,16 +13,38 @@ import { FarmerIcon } from '../../icons/farmer-icon/farmer-icon';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {
-  constructor(private usuarioService : UsuarioService) {}
+export class Home implements OnInit {
+  constructor(private usuarioService : UsuarioService, private produtoService: ProdutoService) {}
+
+  carrinho: number[] = [];
+  carrinhoCount: number = 0;
+
+  ngOnInit(): void {
+      this.buscarProdutos();
+  }
 
   get usuarioLogado() {
     return this.usuarioService.getCurrentUser();
   }
 
-  // Importe sua interface
-// import { Produto } from './caminho/para/produto.interface';
+  private buscarProdutos() {
+    this.produtoService.getTodos().subscribe (
+      (resposta) => {
+        this.produtos = resposta;
+      },
+      (erro) => {
+        console.log("Ops, algo deu errado:", erro);
+      }
+    );
+  }
 
+  adicionarAoCarrinho(produtoId : number ) {
+    if(this.carrinho.includes(produtoId)) {
+      return;
+    }
+    this.carrinho.push(produtoId);
+    this.carrinhoCount = this.carrinho.length;
+  }
 // Esta é a sua lista de produtos mocados
 produtos: Produto[] = [
   {
@@ -32,7 +55,7 @@ produtos: Produto[] = [
     promocao: '7,99', // Deixe vazio "" se não houver promoção
     organico: true,
     unidadeMedida: 'Bandeja',
-           tipoVendedor: 'Comercio',
+    tipoVendedor: 'Comercio',
 
     imagemUrl: '/assets/bgHortlink.png'
   },

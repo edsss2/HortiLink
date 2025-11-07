@@ -32,11 +32,8 @@ public class Foto {
     @Column(name = "tipo_conteudo", nullable = false, length = 50)
     private String tipoConteudo; // MIME Type
 
-    // --- Atributos de Venda/Contexto (Opcionais) ---
-
-    // Este campo é importante para saber qual imagem aparece primeiro
     @Column(name = "ordem_exibicao") 
-    private Integer ordemExibicao; // 1, 2, 3... (usado principalmente em Produtos)O
+    private Integer ordemExibicao;
     
     
     // --- Relacionamentos Polimórficos (Múltiplas FKs Nuláveis) ---

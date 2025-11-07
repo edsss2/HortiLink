@@ -62,6 +62,13 @@ public class Produto {
 	public List<Foto> getFotos() {
 		return fotos;
 	}
+	
+	public Foto getFotoPrimaria() {
+	    return this.fotos.stream()
+	        .filter(f -> f.getOrdemExibicao() == 1)
+	        .findFirst()
+	        .orElse(null);
+	}
 
 	public void setFotos(List<Foto> fotos) {
 		this.fotos = fotos;

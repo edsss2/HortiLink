@@ -96,7 +96,8 @@ public class ComercioProfileServiceImpl implements ComercioProfileService {
 
 	@Override
 	public Oferta excluirOferta(Long idOferta) {
-		// TODO Auto-generated method stub
-		return null;
+		Oferta oferta = buscarOfertaPorId(idOferta);
+		ofertaRepository.delete(oferta);
+		return oferta;
 	}
 }

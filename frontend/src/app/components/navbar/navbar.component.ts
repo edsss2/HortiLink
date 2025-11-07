@@ -13,10 +13,10 @@ export class Navbar implements OnInit{
   usuarioLogado: Usuario | null = null;
   @Input() nomeUsuario!: string;
   @Input() emailUsuario!: string;
+  @Input() carrinhoCount: number = 0;
 
   constructor(private usuarioService: UsuarioService, private authService : AuthService) {}
 
-  carrinhoCount: number = 1;
   ngOnInit(): void {
     // Se inscreve para receber atualizações do usuário
     this.usuarioService.currentUser$.subscribe(user => {
