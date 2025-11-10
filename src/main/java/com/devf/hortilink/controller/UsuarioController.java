@@ -2,7 +2,6 @@ package com.devf.hortilink.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,6 @@ public class UsuarioController {
 	private UsuarioService service;
 	
 	@PutMapping("/{id}/endereco")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<Void> atualizarEndereco(@PathVariable Long id, @RequestBody Endereco endereco) {
 		
 		service.atualizarEndereco(id, endereco);
@@ -31,7 +29,6 @@ public class UsuarioController {
 	}
 	
 	@PutMapping("/{id}/foto")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<Void> atualizarEndereco(@PathVariable Long id, @RequestBody Foto foto) {
 		
 		service.atualizarFoto(id, foto);

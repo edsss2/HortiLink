@@ -28,7 +28,6 @@ public class OfertaController {
 	private OfertaService service;
 	
 	@GetMapping("/listar")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<List<ProdutoCardDTO>> Listar() {
 		List<Oferta> ofertas = service.listarTodos();
 		List<ProdutoCardDTO> produtosCard = ofertas.stream()
@@ -39,7 +38,6 @@ public class OfertaController {
 	}
 	
 	@PostMapping("/salvar")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<Oferta> salvar(@RequestBody Oferta oferta) {
 		Oferta salvo = service.salvar(oferta);
 		
@@ -53,7 +51,6 @@ public class OfertaController {
 	}
 	
 	@GetMapping("/{id}")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<Oferta> buscarPorId(@PathVariable Long id) {
 		Oferta produto = service.buscarPorId(id);
 		
@@ -61,7 +58,6 @@ public class OfertaController {
 	}
 	
 	@DeleteMapping("/{id}")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<Void> excluirPorId(@PathVariable Long id) {
 		service.excluirPorId(id);
 		

@@ -28,7 +28,6 @@ public class ComercioProfileController {
 	private ComercioProfileService service;
 	
 	@GetMapping("/listar")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<List<ComercioProfile>> ListarComercios() {
 		List<ComercioProfile> comercios = service.listarTodos();
 		
@@ -36,7 +35,6 @@ public class ComercioProfileController {
 	}
 	
 	@PostMapping("/salvar")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<ComercioProfile> salvarComercio(@RequestBody ComercioProfile comercio) {
 		ComercioProfile salvo = service.salvar(comercio);
 		
@@ -50,7 +48,6 @@ public class ComercioProfileController {
 	}
 	
 	@GetMapping("/{id}")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<ComercioProfile> buscarPorId(@PathVariable Long id) {
 		ComercioProfile produto = service.buscarPorId(id);
 		
@@ -58,7 +55,6 @@ public class ComercioProfileController {
 	}
 	
 	@DeleteMapping("/{id}")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<Void> excluirPorId(@PathVariable Long id) {
 		service.excluirPorId(id);
 		
@@ -66,7 +62,6 @@ public class ComercioProfileController {
 	}
 	
 	@GetMapping("/{id}/fotos")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<List<Foto>> fotosComercio(@PathVariable Long id) {
 		List<Foto> fotos = service.buscarFotosPorId(id);
 		
@@ -74,7 +69,6 @@ public class ComercioProfileController {
 	}
 	
 	@GetMapping("/{id}/ofertas")
-	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<List<Oferta>> ofertasComercio(@PathVariable Long id) {
 		List<Oferta> ofertas = service.buscarOfertasPorId(id);
 		

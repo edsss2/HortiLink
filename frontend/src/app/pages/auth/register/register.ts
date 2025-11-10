@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { Usuario } from '../../models/usuario.model';
 import { NgxMaskDirective } from 'ngx-mask';
-import { AuthService } from '../../services/auth-service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../services/auth-service';
+import { Usuario } from '../../../models/usuario.model';
 
 @Component({
   selector: 'app-register',

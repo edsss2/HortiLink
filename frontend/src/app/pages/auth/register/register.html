@@ -10,14 +10,24 @@
           <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seu nome</label>
           <input type="text" name="nome" id="name"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-            placeholder="Nome" [(ngModel)]="usuario.nome" required />
+            placeholder="Nome" #nome="ngModel" [(ngModel)]="usuario.nome" required /> 
+            <div class="text-red-500">
+              @if(nome.errors?.['required']) {
+                  <span class="text-xs">Campo obrigatório*</span>
+              }
+            </div>
         </div>
         <div class="flex-1">
           <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Celular</label>
           <input type="tel" id="phone" mask="(00) 0000-0000||(00) 00000-0000" name="telefone"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="(00) 00000-0000" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" [(ngModel)]="usuario.telefone"
+            placeholder="(00) 00000-0000" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" #telefone="ngModel" [(ngModel)]="usuario.telefone"
             required />
+            <div class="text-red-500">
+              @if(telefone.errors?.['required']) {
+                  <span class="text-xs">Campo obrigatório*</span>
+              }
+            </div>
         </div>
       </div>
 
@@ -43,6 +53,13 @@
       <div>
         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sua senha</label>
         <input type="password" name="senha" id="password" placeholder="••••••••"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          [(ngModel)]="usuario.senha" required />
+      </div>
+
+      <div>
+        <label for="confirmarSenha" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirme sua senha</label>
+        <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="••••••••"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
           [(ngModel)]="usuario.senha" required />
       </div>
