@@ -2,11 +2,9 @@ package com.devf.hortilink.controller;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,11 +27,13 @@ public class OfertaController {
 	
 	@GetMapping("/listar")
 	public ResponseEntity<List<ProdutoCardDTO>> Listar() {
-		List<Oferta> ofertas = service.listarTodos();
-		List<ProdutoCardDTO> produtosCard = ofertas.stream()
-				.map(o -> ProdutoCardDTO.fromOferta(o))
-				.collect(Collectors.toList());
-		
+		List<ProdutoCardDTO> produtosCard = service.transformOfertas(service.listarTodos());
+		return ResponseEntity.ok(produtosCard);
+	}
+	
+	@PostMapping("/carrinho")
+	public ResponseEntity<List<ProdutoCardDTO>> listarCarrinho(@RequestBody List<Long> ids) {
+		List<ProdutoCardDTO> produtosCard = service.transformOfertas(service.buscarCarrinho(ids));
 		return ResponseEntity.ok(produtosCard);
 	}
 	

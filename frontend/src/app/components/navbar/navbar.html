@@ -33,11 +33,12 @@
     </form>
 
     <div class="flex items-center space-x-3">
-      <button class="max-w-10 max-h-10 relative"> <i class="fas fa-cart-shopping text-white text-xl"></i>
+      <button class="max-w-10 max-h-10 relative" routerLink="/carrinho" routerLinkActive="active"> 
+      <i class="fas fa-cart-shopping text-white text-xl"></i>
 
-        @if (carrinhoCount > 0) {
+        @if (carrinho.length > 0) {
           <span class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded-full border-2 border-white">
-            {{ carrinhoCount }}
+            {{ carrinho.length }}
           </span>
         }
       </button>

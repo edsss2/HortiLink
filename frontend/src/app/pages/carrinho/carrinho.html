@@ -1,0 +1,11 @@
+@if(usuarioLogado != null) {
+  <app-navbar [nomeUsuario]="usuarioLogado.nome" [emailUsuario]="usuarioLogado.email" [carrinho]="carrinho"></app-navbar>
+} @else {
+  <app-navbar [nomeUsuario]="'not found'" [emailUsuario]="'Sem email'" [carrinho]="carrinho"></app-navbar>
+}
+
+<main class="bg-green-secundary">
+
+</main>
+
+<app-footer></app-footer>

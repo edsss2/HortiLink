@@ -46,4 +46,9 @@ public class ProdutoServiceImpl implements ProdutoService {
 		Produto produto = buscarPorId(id);
 		return produto.getFotos();
 	}
+
+	@Override
+	public List<Produto> buscarCarrinho(List<Long> ids) {
+		return repository.findAllById(ids);
+	}
 }

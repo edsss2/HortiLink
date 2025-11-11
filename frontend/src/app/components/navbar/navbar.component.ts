@@ -2,10 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario-service';
 import { AuthService } from '../../services/auth-service';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
@@ -13,7 +14,7 @@ export class Navbar implements OnInit{
   usuarioLogado: Usuario | null = null;
   @Input() nomeUsuario!: string;
   @Input() emailUsuario!: string;
-  @Input() carrinhoCount: number = 0;
+  @Input() carrinho: number[] =[];
 
   constructor(private usuarioService: UsuarioService, private authService : AuthService) {}
 

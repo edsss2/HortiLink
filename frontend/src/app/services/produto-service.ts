@@ -15,4 +15,8 @@ export class ProdutoService {
   getTodos() : Observable<Produto[]> {
     return this.http.get<Produto[]>(`${this.apiUrl}/listar`);
   }
+
+  getCarrinho(ids : number[]) : Observable<Produto[]> {
+    return this.http.post<Produto[]>(`${this.apiUrl}/carrinho`, ids);
+  }
 }
