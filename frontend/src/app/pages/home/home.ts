@@ -6,6 +6,7 @@ import { Footer } from "../../components/footer/footer.component";
 import { Produto } from '../../models/produto.model';
 import { FarmerIcon } from '../../icons/farmer-icon/farmer-icon';
 import { ProdutoService } from '../../services/produto-service';
+import { CarrinhoService } from '../../services/carrinho-service';
 
 @Component({
   selector: 'app-home',
@@ -14,10 +15,7 @@ import { ProdutoService } from '../../services/produto-service';
   styleUrl: './home.css',
 })
 export class Home implements OnInit {
-  constructor(private usuarioService : UsuarioService, private produtoService: ProdutoService) {}
-
-  carrinho: number[] = [];
-  carrinhoCount: number = 0;
+  constructor(private usuarioService : UsuarioService, private produtoService: ProdutoService, private carrinhoService: CarrinhoService) {}
 
   ngOnInit(): void {
       this.buscarProdutos();
@@ -38,13 +36,10 @@ export class Home implements OnInit {
     );
   }
 
-  adicionarAoCarrinho(produtoId : number ) {
-    if(this.carrinho.includes(produtoId)) {
-      return;
-    }
-    this.carrinho.push(produtoId);
-    this.carrinhoCount = this.carrinho.length;
+  adicionarAoCarrinho(produto: Produto) {
+    this.carrinhoService.adicionarProduto(produto);
   }
+
 // Esta é a sua lista de produtos mocados
 produtos: Produto[] = [
   {

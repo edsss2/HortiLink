@@ -1,39 +1,98 @@
 @if(usuarioLogado != null) {
-<app-navbar [nomeUsuario]="usuarioLogado.nome" [emailUsuario]="usuarioLogado.email" [carrinho]="carrinho"></app-navbar>
+<app-navbar [nomeUsuario]="usuarioLogado.nome" [emailUsuario]="usuarioLogado.email"></app-navbar>
 } @else {
-<app-navbar [nomeUsuario]="'not found'" [emailUsuario]="'Sem email'" [carrinho]="carrinho"></app-navbar>
+<app-navbar [nomeUsuario]="'not found'" [emailUsuario]="'Sem email'"></app-navbar>
 }
 
 <main class="bg-green-secundary">
+  @if (produtos.length > 0) {
   <section class="container mx-auto px-4 py-8">
     <h2 class="text-4xl text-green-light font-semibold my-10">Meu Carrinho</h2>
 
     <div class="grid grid-flow-col grid-rows-3 gap-4">
       <div class="col-span-2 bg-white shadow-lg rounded-md">
         <div class="flex justify-between">
-          <h3 class="text-2xl p-6"><i class="fas fa-basket-shopping text-green-light"></i> Produtos</h3>
-          <a class="p-6" href=""><i class="fas fa-trash"></i>Limpar carrinho</a>
-        </div>
+          <h3 class="text-2xl p-6 font-medium"><i class="fas fa-basket-shopping text-green-light"></i> Produtos</h3>
+          <button type="button" (click)="limparCarrinho()"
+            class="flex items-center gap-2 p-4 text-red-500 underline cursor-pointer transition-transform duration-150 hover:scale-105">
+            <i class="fas fa-trash"></i>
+            <span>Limpar carrinho</span>
+          </button>
 
-        <div class="flex items-center p-4 border-t border-b-gray-300">
-          <img src="/assets/bgHortlink.png" class="w-24 h-24 object-cover rounded-md" alt="Produto">
-          <div class="ml-4">
-            <h2 class="text-lg font-semibold">Nome do Produto</h2>
-            <p class="text-gray-600 text-sm">Descrição curta ou detalhes</p>
+        </div>
+        @for (produto of produtos; track $index) {
+        <div class="flex items-center p-4 border-t border-b border-gray-300">
+          <div class="w-28 shrink-0">
+            <img src="/assets/bgHortlink.png" class="w-24 h-24 object-cover rounded-md" alt="Produto">
+          </div>
+
+          <div class="flex-1 ml-4">
+            <h2 class="text-lg font-medium">{{produto.nome}}</h2>
+            <p class="text-md py-2 font-sm flex items-center">
+              {{produto.nomeComercio}}
+              @if (produto.tipoVendedor === 'Comercio') {
+              <i class="text-xl pl-4 text-green-primary fas fa-store"></i>
+              } @else if (produto.tipoVendedor === 'Produtor') {
+              <svg-farmer class="pl-4"></svg-farmer>
+              }
+            </p>
+          </div>
+
+          <div class="flex items-center justify-center w-40 space-x-3">
+            <div class="inline-flex items-center bg-gray-500 rounded-lg overflow-hidden w-auto">
+              <button class="w-8 h-8 flex items-center justify-center hover:bg-gray-700 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                </svg>
+              </button>
+              <span class="w-10 text-center text-white text-sm font-medium select-none">1</span>
+              <button class="w-8 h-8 flex items-center justify-center hover:bg-gray-700 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+              </button>
+            </div>
+
+            <button (click)="removerDoCarrinho(produto.id!)" class="p-2 hover:bg-red-50 rounded-lg">
+              <i class="fas fa-trash text-red-500"></i>
+            </button>
+          </div>
+
+          <!-- Coluna 4: preço -->
+          <div class="w-36 text-right">
+            <p class="font-semibold text-lg text-green-primary">
+              R${{produto.valor}} /{{produto.unidadeMedida}}
+            </p>
           </div>
         </div>
-        <div class="flex items-center p-4 border-t border-b-gray-600">
-          <img src="/assets/bgHortlink.png" class="w-24 h-24 object-cover rounded-md" alt="Produto">
-          <div class="ml-4">
-            <h2 class="text-lg font-semibold">Nome do Produto</h2>
-            <p class="text-gray-600 text-sm">Descrição curta ou detalhes</p>
-          </div>
-        </div>
+        }
+
+
+
       </div>
-      <div class="row-span-3 bg-white shadow-lg rounded-md h-100">01</div>
+      <div class="row-span-3 bg-white shadow-lg rounded-md h-100">
+        <h3 class="text-2xl p-6 font-medium">Resumo</h3>
+      </div>
     </div>
 
   </section>
+  } @else {
+<section class="flex flex-col items-center justify-center text-center mx-auto mt-20 max-w-md gap-4">
+  <h4 class="text-3xl font-semibold text-neutral-700">O seu carrinho está vazio.</h4>
+  <span class="text-md text-neutral-500">Deseja olhar outros produtos?</span>
+
+  <button 
+    routerLink="/home" 
+    class="w-full cursor-pointer text-xl bg-green-light hover:bg-green-primary rounded-md text-white py-4 transition-all"
+  >
+    <i class="fas fa-cart-shopping mr-2"></i>
+    CONTINUAR COMPRANDO
+  </button>
+</section>
+
+  }
 </main>
 
 <app-footer></app-footer>

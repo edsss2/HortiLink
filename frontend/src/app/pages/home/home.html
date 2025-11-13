@@ -1,7 +1,7 @@
 @if(usuarioLogado != null) {
-  <app-navbar [nomeUsuario]="usuarioLogado.nome" [emailUsuario]="usuarioLogado.email" [carrinho]="carrinho"></app-navbar>
+  <app-navbar [nomeUsuario]="usuarioLogado.nome" [emailUsuario]="usuarioLogado.email"></app-navbar>
 } @else {
-  <app-navbar [nomeUsuario]="'not found'" [emailUsuario]="'Sem email'" [carrinho]="carrinho"></app-navbar>
+  <app-navbar [nomeUsuario]="'not found'" [emailUsuario]="'Sem email'"></app-navbar>
 }
 <main class="bg-green-secundary">
 
@@ -34,7 +34,7 @@
             &nbsp;
           }
 
-          <button (click)="adicionarAoCarrinho(produto.id!)"
+          <button (click)="adicionarAoCarrinho(produto)"
             class="mt-4 w-full text-white bg-blue-primary hover:bg-blue-hover focus:ring-4 focus:outline-nones font-medium rounded-lg text-sm px-5 py-2.5 text-center">
             Adicionar ao carrinho
             <i class="fas fa-cart-shopping text-white"></i>
