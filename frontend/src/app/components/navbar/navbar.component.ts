@@ -17,8 +17,11 @@ export class Navbar implements OnInit{
   @Input() emailUsuario!: string;
 
   quantidadeCarrinho = 0;
+  isVendedor: boolean = false;
 
-  constructor(private usuarioService: UsuarioService, private authService : AuthService, private carrinhoService : CarrinhoService) {}
+  constructor(private usuarioService: UsuarioService, private authService : AuthService, private carrinhoService : CarrinhoService) {
+    this.isVendedor = usuarioService.isVendedor();
+  }
 
   ngOnInit(): void {
     this.usuarioService.currentUser$.subscribe(user => {

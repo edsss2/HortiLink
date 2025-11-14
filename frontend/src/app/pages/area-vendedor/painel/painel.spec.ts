@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AreaProdutor } from './area-produtor';
+import { Painel } from './painel';
 
-describe('AreaProdutor', () => {
-  let component: AreaProdutor;
-  let fixture: ComponentFixture<AreaProdutor>;
+describe('Painel', () => {
+  let component: Painel;
+  let fixture: ComponentFixture<Painel>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AreaProdutor]
+      imports: [Painel]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AreaProdutor);
+    fixture = TestBed.createComponent(Painel);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
