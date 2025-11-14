@@ -1,16 +1,19 @@
 import { Routes } from "@angular/router";
 import { Painel } from "./painel.component";
+import { Dashboard } from "./dashboard/dashboard";
+import { Pedidos } from "./pedidos/pedidos";
+import { Vitrine } from "./vitrine/vitrine";
 
 
 export const PAINEL_ROUTES: Routes = [
   {
-    path: '/area-vendedor',
+    path: '',
     component: Painel,
     children: [
-      // 2. Rotas "filhas" que aparecem DENTRO do <router-outlet> do PainelComponent
-      { path: 'produtos', component: MeusProdutosComponent },
-      { path: 'pedidos', component: PedidosRecebidosComponent },
-      { path: '', redirectTo: 'produtos', pathMatch: 'full' }
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: Dashboard},
+      { path: 'pedidos', component: Pedidos},
+      { path: 'vitrine', component: Vitrine}
     ]
   }
 ];

@@ -13,8 +13,7 @@ export const routes: Routes = [
     {path: 'carrinho', component: Carrinho},
     {
         path: 'painel',
-        canActivate: [ vendedorGuard ], // 3. APLIQUE O GUARD
-        // Carrega o "filho" (o módulo/rotas do painel)
+        //canActivate: [ vendedorGuard ],
         loadChildren: () => import('./pages/area-vendedor/painel/painel.routes').then(m => m.PAINEL_ROUTES)
     }
 ];

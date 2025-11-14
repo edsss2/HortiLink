@@ -16,13 +16,10 @@ import { CarrinhoService } from '../../services/carrinho-service';
 })
 export class Home implements OnInit {
 
-  public termoBusca: string = '';
-  public produtosFiltrados: Produto[] = [];
-
   constructor(private usuarioService: UsuarioService, private produtoService: ProdutoService, private carrinhoService: CarrinhoService) { }
 
   ngOnInit(): void {
-    this.buscarProdutos();
+    //this.buscarProdutos();
   }
 
   get usuarioLogado() {
@@ -33,25 +30,11 @@ export class Home implements OnInit {
     this.produtoService.getTodos().subscribe(
       (resposta) => {
         this.produtos = resposta;
-        this.produtosFiltrados = resposta;
       },
       (erro) => {
         console.log("Ops, algo deu errado:", erro);
       }
     );
-  }
-
-  public filtrarProdutos(): void {
-    const termo = this.termoBusca.toLowerCase().trim();
-
-    if (!termo) {
-      this.produtosFiltrados = this.produtos;
-      return;
-    }
-
-    this.produtosFiltrados = this.produtos.filter(produto => {
-      return produto.nome.toLowerCase().includes(termo);
-    });
   }
 
   adicionarAoCarrinho(produto: Produto) {
