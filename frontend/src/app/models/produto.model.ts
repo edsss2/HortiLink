@@ -7,6 +7,8 @@ export interface Produto {
     organico: boolean;
     unidadeMedida: string;
     tipoVendedor: string;
+    qtdDisponivel: number;
+    qtdCarrinho?: number;
 
     imagemUrl: string;
 }

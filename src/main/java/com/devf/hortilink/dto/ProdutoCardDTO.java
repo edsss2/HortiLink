@@ -1,5 +1,7 @@
 package com.devf.hortilink.dto;
 
+import java.math.BigDecimal;
+
 import com.devf.hortilink.entity.ComercioProfile;
 import com.devf.hortilink.entity.Oferta;
 import com.devf.hortilink.entity.Produto;
@@ -14,6 +16,7 @@ public class ProdutoCardDTO {
 	private Boolean organico;
 	private String unidadeMedida;
 	private String tipoVendedor;
+	private BigDecimal quantidadeDisponivel;
 	
 	private String imageUrl;
 	
@@ -30,6 +33,7 @@ public class ProdutoCardDTO {
 		dto.setOrganico(produto.getCertificadoOrganico());
 		dto.setUnidadeMedida(produto.getUnidadeMedida().getSimbolo());
 		dto.setTipoVendedor(comercio.getUser().getRole().getNome());
+		dto.setQuantidadeDisponivel(oferta.getEstoqueAtual()	);
 		dto.setImageUrl(produto.getFotoPrimaria().getCaminhoArquivo());
 		
 		return dto;
@@ -61,6 +65,14 @@ public class ProdutoCardDTO {
 
 	public String getValor() {
 		return valor;
+	}
+
+	public BigDecimal getQuantidadeDisponivel() {
+		return quantidadeDisponivel;
+	}
+
+	public void setQuantidadeDisponivel(BigDecimal quantidadeDisponivel) {
+		this.quantidadeDisponivel = quantidadeDisponivel;
 	}
 
 	public void setValor(String valor) {

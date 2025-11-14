@@ -9,8 +9,8 @@
   <section class="container mx-auto px-4 py-8">
     <h2 class="text-4xl text-green-light font-semibold my-10">Meu Carrinho</h2>
 
-    <div class="grid grid-flow-col grid-rows-3 gap-4">
-      <div class="col-span-2 bg-white shadow-lg rounded-md">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div class="lg:col-span-2 bg-white shadow-lg rounded-md">
         <div class="flex justify-between">
           <h3 class="text-2xl p-6 font-medium"><i class="fas fa-basket-shopping text-green-light"></i> Produtos</h3>
           <button type="button" (click)="limparCarrinho()"
@@ -40,14 +40,16 @@
 
           <div class="flex items-center justify-center w-40 space-x-3">
             <div class="inline-flex items-center bg-gray-500 rounded-lg overflow-hidden w-auto">
-              <button class="w-8 h-8 flex items-center justify-center hover:bg-gray-700 transition">
+              <button class="w-8 h-8 flex items-center justify-center hover:bg-gray-700 transition"
+                (click)="decrementarQtd(produto.id!)">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24"
                   stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
                 </svg>
               </button>
-              <span class="w-10 text-center text-white text-sm font-medium select-none">1</span>
-              <button class="w-8 h-8 flex items-center justify-center hover:bg-gray-700 transition">
+              <span class="w-10 text-center text-white text-sm font-medium select-none">{{produto.qtdCarrinho}}</span>
+              <button class="w-8 h-8 flex items-center justify-center hover:bg-gray-700 transition"
+                (click)="incrementarQtd(produto.id!)">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-green-400" fill="none" viewBox="0 0 24 24"
                   stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -60,7 +62,6 @@
             </button>
           </div>
 
-          <!-- Coluna 4: preço -->
           <div class="w-36 text-right">
             <p class="font-semibold text-lg text-green-primary">
               R${{produto.valor}} /{{produto.unidadeMedida}}
@@ -72,25 +73,48 @@
 
 
       </div>
-      <div class="row-span-3 bg-white shadow-lg rounded-md h-100">
-        <h3 class="text-2xl p-6 font-medium">Resumo</h3>
+      <div class="lg:row-span-3 bg-white shadow-lg rounded-md flex flex-col">
+        <h3 class="text-2xl p-6 font-medium border-b border-gray-300">Resumo</h3>
+        <div class="grow overflow-y-auto">
+          @for (valor of produtos; track $index) {
+          <div class="flex justify-between p-4 border-b border-gray-300">
+            <span>{{valor.nome}}</span>
+            <span>{{ calcularSubtotal(valor) | currency : 'BRL' }}</span>
+
+          </div>
+          }
+        </div>
+        <div class="bg-gray-200">
+          <h4 class="font-semibold text-2xl p-4">Total: <span>{{ calcularTotal() | currency : 'BRL' }}</span></h4>
+        </div>
+        <div class="p-4 flex flex-col gap-2">
+          <button (click)="finalizarCompra()"
+            class="w-full cursor-pointer text-xl bg-green-light hover:bg-green-primary rounded-md text-white py-3 transition-all">
+            <i class="fas fa-cart-shopping mr-2"></i>
+            Finzalizar Compra
+          </button>
+          <button routerLink="/home"
+            class=" w-full cursor-pointer text-xl border-green-light border-2 hover:bg-green-secundary rounded-md text-green-light  py-3">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Continuar Comprando
+          </button>
+        </div>
+
       </div>
     </div>
 
   </section>
   } @else {
-<section class="flex flex-col items-center justify-center text-center mx-auto mt-20 max-w-md gap-4">
-  <h4 class="text-3xl font-semibold text-neutral-700">O seu carrinho está vazio.</h4>
-  <span class="text-md text-neutral-500">Deseja olhar outros produtos?</span>
+  <section class="flex flex-col items-center justify-center text-center mx-auto mt-20 max-w-md gap-4">
+    <h4 class="text-3xl font-semibold text-neutral-700">O seu carrinho está vazio.</h4>
+    <span class="text-md text-neutral-500">Deseja olhar outros produtos?</span>
 
-  <button 
-    routerLink="/home" 
-    class="w-full cursor-pointer text-xl bg-green-light hover:bg-green-primary rounded-md text-white py-4 transition-all"
-  >
-    <i class="fas fa-cart-shopping mr-2"></i>
-    CONTINUAR COMPRANDO
-  </button>
-</section>
+    <button routerLink="/home"
+      class="w-full cursor-pointer text-xl bg-green-light hover:bg-green-primary rounded-md text-white py-4 transition-all">
+      <i class="fas fa-cart-shopping mr-2"></i>
+      CONTINUAR COMPRANDO
+    </button>
+  </section>
 
   }
 </main>

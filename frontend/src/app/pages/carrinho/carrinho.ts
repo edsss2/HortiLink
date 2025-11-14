@@ -7,10 +7,11 @@ import { ProdutoService } from '../../services/produto-service';
 import { FarmerIcon } from '../../icons/farmer-icon/farmer-icon';
 import { RouterLink } from "@angular/router";
 import { CarrinhoService } from '../../services/carrinho-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-carrinho',
-  imports: [Footer, Navbar, FarmerIcon, RouterLink],
+  imports: [Footer, Navbar, FarmerIcon, RouterLink, CommonModule],
   templateUrl: './carrinho.html',
   styleUrl: './carrinho.css',
 })
@@ -40,52 +41,26 @@ export class Carrinho implements OnInit {
     this.carrinhoService.adicionarProduto(produto);
   }
 
-  produtos: Produto[] = [
-  {
-    id: 1,
-    nome: 'Tomate Cereja Orgânico',
-    nomeComercio: 'Fazenda Sol Nascente',
-    valor: '8,50',
-    promocao: '7,99', // Deixe vazio "" se não houver promoção
-    organico: true,
-    unidadeMedida: 'Bandeja',
-    tipoVendedor: 'Comercio',
-
-    imagemUrl: '/assets/bgHortlink.png'
-  },
-  {
-    id: 2,
-    nome: 'Alface Crespa Hidropônica',
-    nomeComercio: 'Verde Vale Hortaliças',
-    valor: '3,50',
-    promocao: '', // Sem promoção
-    organico: false,
-        unidadeMedida: 'Un',
-        tipoVendedor: 'Produtor',
-       imagemUrl: '/assets/bgHortlink.png'
-  },
-  {
-    id: 3,
-    nome: 'Cenoura',
-    nomeComercio: 'Sítio Terra Boa',
-    valor: '4,00',
-    promocao: '3,49',
-    organico: false,
-        unidadeMedida: 'g',
-              tipoVendedor: 'Produtor',
-    imagemUrl: '/assets/bgHortlink.png'
-  },
-  {
-    id: 4,
-    nome: 'Maçã Fuji',
-    nomeComercio: 'Pomar Irmãos Silva',
-    valor: '1,50',
-    promocao: '',
-    organico: true,
-        unidadeMedida: 'Un',
-              tipoVendedor: 'Produtor',
-        imagemUrl: '/assets/bgHortlink.png'
+  public incrementarQtd(id: number) {
+    this.carrinhoService.incrementarQuantidade(id);
   }
-];
+
+  public decrementarQtd(id: number) {
+    this.carrinhoService.decrementarQuantidade(id);
+  }
+
+  public calcularSubtotal(produto: Produto): number {
+    return this.carrinhoService.calcularSubtotal(produto);
+  } 
+
+  public calcularTotal(): number {
+    return this.carrinhoService.calcularTotal();
+  }
+
+  public finalizarCompra() {
+    alert("Compra finalizada!");
+  }
+
+  produtos: Produto[] = [];
 
 }
