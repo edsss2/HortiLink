@@ -47,13 +47,22 @@
       </button>
       <div id="user-dropdown" class="z-50 hidden my-4 text-base list-none bg-gray-600 rounded-lg shadow-sm">
         <div class="px-4 py-3">
-          <span class="block text-sm text-gray-200">{{ nomeUsuario }}</span>
-          <span class="block text-sm truncate text-gray-400">{{ emailUsuario }}</span>  
+          @if (usuarioLogado !== null) {
+            <span class="block text-sm text-gray-200">{{ usuarioLogado!.nome }}</span>
+            <span class="block text-sm truncate text-gray-400">{{ usuarioLogado!.email }}</span> 
+          } @else {
+            <span class="block text-sm text-gray-200"> Usuário </span>
+            <span class="block text-sm truncate text-gray-400">Logue no nosso sistema!</span> 
+          }
+           
         </div>
         <ul class="py-2" aria-labelledby="user-menu-button">
-          <li>
-            <a routerLink="/area-vendedor"></a>
+          @if (isVendedor) {
+            <li>
+            <a routerLink="/painel" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-400">Área do vendedor</a>
           </li>
+          }
+          
           <li>
             <a (click)="logout()" class="block px-4 py-2 text-sm text-gray-200 hover:bg-gray-400 ">Sair</a>
           </li>

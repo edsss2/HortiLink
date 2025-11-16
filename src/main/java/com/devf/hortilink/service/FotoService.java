@@ -1,13 +1,19 @@
 package com.devf.hortilink.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.devf.hortilink.entity.ComercioProfile;
 import com.devf.hortilink.entity.Foto;
+import com.devf.hortilink.entity.Produto;
+import com.devf.hortilink.entity.Usuario;
 
 public interface FotoService {
 	
 	Foto buscarPorId(Long id);
 	Foto excluirPorId(Long id);
-	Foto salvar(Foto foto);
 	String buscarUrlPorId(Long id);
-	
+	Foto salvarFotoProduto(MultipartFile file, Produto produto, int ordem);
+	Foto salvarFotoUsuario(MultipartFile file, Usuario usuario, int ordem);
+	Foto salvarFotoComercio(MultipartFile file, ComercioProfile comercio, int ordem);
 	
 }

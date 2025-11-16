@@ -13,7 +13,7 @@ export const routes: Routes = [
     {path: 'carrinho', component: Carrinho},
     {
         path: 'painel',
-        //canActivate: [ vendedorGuard ],
+        canActivate: [ vendedorGuard ],
         loadChildren: () => import('./pages/area-vendedor/painel/painel.routes').then(m => m.PAINEL_ROUTES)
     }
 ];

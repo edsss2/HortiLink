@@ -13,8 +13,6 @@ import { CarrinhoService } from '../../services/carrinho-service';
 })
 export class Navbar implements OnInit{
   usuarioLogado: Usuario | null = null;
-  @Input() nomeUsuario!: string;
-  @Input() emailUsuario!: string;
 
   quantidadeCarrinho = 0;
   isVendedor: boolean = false;

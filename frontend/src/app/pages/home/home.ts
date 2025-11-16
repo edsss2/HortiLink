@@ -19,7 +19,7 @@ export class Home implements OnInit {
   constructor(private usuarioService: UsuarioService, private produtoService: ProdutoService, private carrinhoService: CarrinhoService) { }
 
   ngOnInit(): void {
-    //this.buscarProdutos();
+    this.buscarProdutos();
   }
 
   get usuarioLogado() {

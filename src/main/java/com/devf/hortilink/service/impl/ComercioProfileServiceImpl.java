@@ -11,6 +11,7 @@ import com.devf.hortilink.entity.ComercioProfile;
 import com.devf.hortilink.entity.Foto;
 import com.devf.hortilink.entity.Oferta;
 import com.devf.hortilink.entity.Produto;
+import com.devf.hortilink.entity.Usuario;
 import com.devf.hortilink.repository.ComercioProfileRepository;
 import com.devf.hortilink.repository.OfertaRepository;
 import com.devf.hortilink.service.ComercioProfileService;
@@ -100,4 +101,5 @@ public class ComercioProfileServiceImpl implements ComercioProfileService {
 		ofertaRepository.delete(oferta);
 		return oferta;
 	}
+
 }

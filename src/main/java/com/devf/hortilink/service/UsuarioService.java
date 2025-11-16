@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.devf.hortilink.entity.ComercioProfile;
 import com.devf.hortilink.entity.Endereco;
 import com.devf.hortilink.entity.Foto;
 import com.devf.hortilink.entity.Usuario;

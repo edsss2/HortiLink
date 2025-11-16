@@ -38,7 +38,6 @@ public class Foto {
     
     // --- Relacionamentos Polimórficos (Múltiplas FKs Nuláveis) ---
     
-    // 1. Imagem de Produto (Relacionamento: Um produto tem muitas Imagens)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "produto_id", nullable = true) // Esta FK é NULL quando a imagem for de outro tipo
     private Produto produto;

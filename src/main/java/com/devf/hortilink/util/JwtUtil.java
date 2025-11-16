@@ -1,13 +1,16 @@
 package com.devf.hortilink.util;
 
+import java.util.Date;
+
+import javax.crypto.SecretKey;
+
+import org.springframework.stereotype.Component;
+
+import io.jsonwebtoken.Claims; // Importe
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.stereotype.Component;
-
-import java.security.Key;
-import java.util.Date;
 
 @Component
 public class JwtUtil {
@@ -15,7 +18,7 @@ public class JwtUtil {
     private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1h
 
     // Crie a chave uma única vez
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private final SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String generateToken(String username) {
         return Jwts.builder()
@@ -26,32 +29,36 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String extractUsername(String token) {
-        // Para v0.12.3, o método correto é:
+    // --- CORREÇÃO AQUI ---
+    // Método privado para extrair todas as "claims" (informações) do token
+    private Claims extractAllClaims(String token) {
+        // A nova API usa parser() e verifyWith()
         return Jwts.parser()
-                .setSigningKey(key)
+                .verifyWith(key) // 1. Use verifyWith(key)
                 .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
+                .parseSignedClaims(token) // 2. Use parseSignedClaims
+                .getPayload(); // 3. Use getPayload()
     }
 
-    public boolean validateToken(String token, String username) {
-        try {
-            String extractedUsername = extractUsername(token);
-            return (extractedUsername.equals(username) && !isTokenExpired(token));
-        } catch (JwtException e) {
-            return false;
-        }
+    public String extractUsername(String token) {
+        return extractAllClaims(token).getSubject();
     }
 
     private boolean isTokenExpired(String token) {
-        Date expiration = Jwts.parser() // <--- E AQUI TAMBÉM
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .getExpiration();
-        return expiration.before(new Date());
+        return extractAllClaims(token).getExpiration().before(new Date());
+    }
+    
+    public boolean validateToken(String token, String username) {
+        try {
+            String extractedUsername = extractUsername(token);
+            // 4. O parser já vai falhar se o token estiver expirado,
+            //    então a verificação dupla não é estritamente necessária,
+            //    mas esta lógica está correta.
+            return (extractedUsername.equals(username) && !isTokenExpired(token));
+        } catch (JwtException e) {
+            // Se o token estiver expirado, com assinatura errada, etc.,
+            // o extractAllClaims() vai lançar uma exceção.
+            return false;
+        }
     }
 }
