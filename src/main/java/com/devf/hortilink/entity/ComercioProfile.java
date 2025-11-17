@@ -27,7 +27,6 @@ public class ComercioProfile {
 	
 	private String nomeComercio;
 	private Integer raioMaximoEntregaKm;
-	private String cepBase;
 	
 	@OneToMany(mappedBy = "comercio", cascade = CascadeType.ALL)
     private List<Oferta> ofertas;
@@ -89,13 +88,6 @@ public class ComercioProfile {
 		this.raioMaximoEntregaKm = raioMaximoEntregaKm;
 	}
 
-	public String getCepBase() {
-		return cepBase;
-	}
-
-	public void setCepBase(String cepBase) {
-		this.cepBase = cepBase;
-	}
 
 	public List<Oferta> getOfertas() {
 		return ofertas;

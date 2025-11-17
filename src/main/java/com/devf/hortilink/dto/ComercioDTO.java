@@ -1,17 +1,11 @@
-package com.devf.hortilink.entity;
+package com.devf.hortilink.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
-public class Endereco {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ComercioDTO {
+	
 	private Long id;
 	
+	private String nome;
+	private Integer raioMaximoEntregaKm;
 	private String rua;
 	private String estado;
 	private String numero;
@@ -21,23 +15,26 @@ public class Endereco {
 	private String bairro;
 	
 	
-	
-	
-	//Getters e Setters
-	public String getRua() {
-		return rua;
-	}
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getCidade() {
-		return cidade;
+	public String getNome() {
+		return nome;
 	}
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public Integer getRaioMaximoEntregaKm() {
+		return raioMaximoEntregaKm;
+	}
+	public void setRaioMaximoEntregaKm(Integer raioMaximoEntregaKm) {
+		this.raioMaximoEntregaKm = raioMaximoEntregaKm;
+	}
+	public String getRua() {
+		return rua;
 	}
 	public void setRua(String rua) {
 		this.rua = rua;
@@ -65,6 +62,12 @@ public class Endereco {
 	}
 	public void setComplemento(String complemento) {
 		this.complemento = complemento;
+	}
+	public String getCidade() {
+		return cidade;
+	}
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
 	public String getBairro() {
 		return bairro;

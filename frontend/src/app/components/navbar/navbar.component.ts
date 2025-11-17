@@ -23,22 +23,16 @@ export class Navbar implements OnInit{
 
   public isDropdownOpen = false;
 
-  ngOnInit(): void {
-    this.usuarioService.currentUser$.subscribe(user => {
-      this.usuarioLogado = user;
-        
-    if (user) {
-      console.log("Nome:", user.nome);
-    } else {
-      console.log("❌ Nenhum usuário logado.");
-    }
-      console.log("🔄 Navbar atualizado:", user);
-    });
+ngOnInit(): void {
+  this.usuarioService.currentUser$.subscribe(user => {
+    this.usuarioLogado = user;
+  });
 
-    this.carrinhoService.carrinho$.subscribe(itens => {
-      this.quantidadeCarrinho = itens.length;
-    });
-  }
+  this.carrinhoService.carrinho$.subscribe(itens => {
+    this.quantidadeCarrinho = itens.length;
+  });
+}
+
 
   toggleDropdown(event: MouseEvent): void {
     event.stopPropagation(); // A parte mais importante!

@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.devf.hortilink.dto.ComercioDTO;
 import com.devf.hortilink.entity.ComercioProfile;
+import com.devf.hortilink.entity.Endereco;
 import com.devf.hortilink.entity.Foto;
 import com.devf.hortilink.entity.Oferta;
 import com.devf.hortilink.entity.Produto;
@@ -16,6 +18,7 @@ import com.devf.hortilink.repository.ComercioProfileRepository;
 import com.devf.hortilink.repository.OfertaRepository;
 import com.devf.hortilink.service.ComercioProfileService;
 import com.devf.hortilink.service.ProdutoService;
+import com.devf.hortilink.service.UsuarioService;
 
 @Service
 public class ComercioProfileServiceImpl implements ComercioProfileService {
@@ -28,6 +31,9 @@ public class ComercioProfileServiceImpl implements ComercioProfileService {
 	
 	@Autowired
 	private ProdutoService produtoService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 
 	@Override
 	public List<ComercioProfile> listarTodos() {
@@ -48,7 +54,23 @@ public class ComercioProfileServiceImpl implements ComercioProfileService {
 	}
 
 	@Override
-	public ComercioProfile salvar(ComercioProfile comercioProfile) {
+	public ComercioProfile salvar(ComercioDTO comercio, Usuario usuario) {
+		ComercioProfile comercioProfile = new ComercioProfile();
+		comercioProfile.setNomeComercio(comercio.getNome());
+		comercioProfile.setRaioMaximoEntregaKm(comercio.getRaioMaximoEntregaKm());
+		comercioProfile.setUser(usuario);
+		
+		Endereco endereco = new Endereco();
+		endereco.setBairro(comercio.getBairro());
+		endereco.setCep(comercio.getCep());
+		endereco.setCidade(comercio.getCidade());
+		endereco.setComplemento(comercio.getComplemento());
+		endereco.setEstado(comercio.getEstado());
+		endereco.setNumero(comercio.getNumero());
+		endereco.setRua(comercio.getRua());
+		
+		usuarioService.atualizarEndereco(usuario.getId(), endereco);
+		
 		return repository.save(comercioProfile);
 	}
 

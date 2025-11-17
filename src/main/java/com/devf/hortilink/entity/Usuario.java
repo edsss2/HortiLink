@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 
 @Entity
 public class Usuario {
@@ -28,6 +29,9 @@ public class Usuario {
 	private String senha;
 
 	private Role role;
+	
+	@Transient
+	public Boolean cadastroIncompleto = false;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "endereco_id", nullable = true)

@@ -65,7 +65,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public void atualizarEndereco(Long id, Endereco endereco) {
 		Usuario usuario = buscarPorId(id);
 		usuario.setEndereco(endereco);
-		
+		repository.save(usuario);
 	}
 
 	@Override

@@ -32,18 +32,20 @@ export class Register implements OnInit {
         Validators.minLength(3), 
         Validators.maxLength(50)
       ]],
-      telefone: [null as string | null, Validators.required],
+      telefone: [null as string | null, [
+        Validators.required,
+        this.telefoneValidator
+      ]],
       role: [null as Role | null, Validators.required],
       email: [null as string | null, [
         Validators.required,
         Validators.email],
         [this.isEmailUnico.bind(this)]
       ],
-      senha: [null as string | null, [
-        Validators.required,
-        this.validaSenha
-      ]],
+      senha: [null as string | null, Validators.required],
       confirmarSenha: [null as string | null, Validators.required]
+    }, {
+      validators: [ this.senhasIguaisValidator ]
     });
   }
 
@@ -56,24 +58,40 @@ export class Register implements OnInit {
     const formData = this.registerForm.getRawValue();
 
     this.authService.register(formData as Usuario).subscribe({
-      next: () => console.log("Usuário registrado com sucesso!"),
+      next: () => {
+        console.log("Usuário registrado com sucesso!");
+        this.router.navigate(['/login']);
+      },
       error: (err) => alert("Erro ao cadastrar usuário")
     });
     
   }
 
-  private validaSenha(control: AbstractControl): ValidationErrors | null {
-    const senha = this.registerForm.get('senha')?.value;
-    const confirmar = this.registerForm.get('confirmarSenha')?.value;
+  private senhasIguaisValidator(group: AbstractControl): ValidationErrors | null {
+    const senha = group.get('senha')?.value;
+    const confirmar = group.get('confirmarSenha')?.value;
 
-    if (senha !== confirmar) {
-      this.registerForm.get('confirmarSenha')?.setErrors({ senhasDiferentes: true });
+    if (senha && confirmar && senha !== confirmar) {
+      group.get('confirmarSenha')?.setErrors({ senhasDiferentes: true });
       return { senhasDiferentes: true };
     }
 
     return null;
-
   }
+
+  private telefoneValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value;
+
+  if (!value) return null;
+
+  const digits = value.replace(/\D/g, '');
+
+  if (digits.length === 10 || digits.length === 11) {
+    return null;
+  }
+
+  return { telefoneInvalido: true };
+}
 
 private isEmailUnico(control: AbstractControl) {
   return this.authService.isEmailUnico(control.value).pipe(

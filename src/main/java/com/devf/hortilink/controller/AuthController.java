@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devf.hortilink.entity.Usuario;
+import com.devf.hortilink.enums.Role;
 import com.devf.hortilink.service.UsuarioService;
 import com.devf.hortilink.util.JwtUtil;
 
@@ -38,6 +39,12 @@ public class AuthController {
 
             String token = jwtUtil.generateToken(request.getEmail());
             Usuario usuarioLogado = usuarioService.buscarPorEmail(request.getEmail());
+            
+            boolean isVendedor = usuarioLogado.getRole() == Role.COMERCIO || usuarioLogado.getRole() == Role.PRODUTOR;
+            if(isVendedor && usuarioLogado.getComercioProfile() == null) {
+            	usuarioLogado.cadastroIncompleto = true;
+            }
+           
             return ResponseEntity.ok(new AuthResponse(token, usuarioLogado));
 
         } catch (BadCredentialsException e) {

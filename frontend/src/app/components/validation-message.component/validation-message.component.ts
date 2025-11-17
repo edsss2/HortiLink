@@ -23,12 +23,13 @@ export class ValidationMessageComponent {
     'minlength': 'O valor é muito curto.',
     'maxlength': 'O valor é muito longo.',
     'min': 'O valor deve ser maior.',
-    'pattern': 'O formato está incorreto (ex: deve ser um inteiro).',
-    'senhaInvalida': 'As senhas devem ser iguais.',
+    'senhasDiferentes': 'As senhas devem ser iguais.',
     'emailJaExiste': 'Este email já possui uma conta.',
-    'email': 'O email precisa ser válido',
+    'email': 'Email inválido.',
+    'telefoneInvalido': 'Telefone inválido.',
     'dataFutura': 'A data não pode ser no futuro.',
-    'promocaoInvalida': 'O preço promocional deve ser menor que o preço normal.'
+    'promocaoInvalida': 'O preço promocional deve ser menor que o preço normal.',
+    'pattern': 'O formato está incorreto (ex: deve ser um inteiro).'
   };
 
   /**

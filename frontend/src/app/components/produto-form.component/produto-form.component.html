@@ -119,6 +119,10 @@
             (mainImageChange)="setMainImage($event)"
             (additionalImagesChange)="setAdditionalImages($event)">
         </app-image-uploader>
+        
+        @if (mainImageError) {
+          <p class="text-red-600 text-sm mt-2">A imagem principal é obrigatória.</p>
+        }
     </div>
 
   </div>

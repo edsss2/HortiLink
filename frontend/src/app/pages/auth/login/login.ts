@@ -44,7 +44,7 @@ export class Login {
       },
       error: (err) => {
         console.error("Erro no login: ", err);
-        alert(err);
+        alert("Erro no login");
       }
     });
   }

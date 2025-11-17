@@ -37,7 +37,6 @@ export class ImageUploaderComponent {
     
     this.mainImageFile = file;
     this.generatePreview(file, (result) => {
-      console.log(file);
       this.mainImagePreview = result;
       this.mainImageChange.emit(this.mainImageFile);
     });

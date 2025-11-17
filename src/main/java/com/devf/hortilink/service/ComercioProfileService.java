@@ -2,6 +2,7 @@ package com.devf.hortilink.service;
 
 import java.util.List;
 
+import com.devf.hortilink.dto.ComercioDTO;
 import com.devf.hortilink.entity.ComercioProfile;
 import com.devf.hortilink.entity.Foto;
 import com.devf.hortilink.entity.Oferta;
@@ -13,7 +14,7 @@ public interface ComercioProfileService {
 	List<ComercioProfile> listarTodos();
 	ComercioProfile buscarPorId(Long id);
 	ComercioProfile excluirPorId(Long id);
-	ComercioProfile salvar(ComercioProfile comercioProfile);
+	ComercioProfile salvar(ComercioDTO comercioProfile, Usuario usuario);
 	List<Foto> buscarFotosPorId(Long id);
 	Oferta buscarOfertaPorId(Long idOferta);
 	Oferta editarOferta(Long idOferta, Oferta oferta);

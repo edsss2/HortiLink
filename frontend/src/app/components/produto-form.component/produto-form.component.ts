@@ -38,7 +38,7 @@ export class ProdutoFormComponent implements OnInit {
 
   public produtoForm! : FormGroup<ProdutoForm>;
 
-
+  public mainImageError = false;
   private mainImageFile: File | null = null;
   private additionalImageFiles: File[] = [];
 
@@ -50,23 +50,31 @@ export class ProdutoFormComponent implements OnInit {
     this.additionalImageFiles = files;
   }
 
-  onSubmit() {
-    if (this.produtoForm.invalid) {
-      this.produtoForm.markAllAsTouched();
-      return;
-    }
+onSubmit() {
+  this.mainImageError = false;
 
-    const formData = this.produtoForm.getRawValue();
-
-    this.produtoService.salvarProduto(
-      formData as ProdutoData,
-      this.mainImageFile,
-      this.additionalImageFiles  
-    ).subscribe({
-      next: () => console.log('Produto salvo com sucesso!'),
-      error: (err) => console.error('Erro ao salvar:', err)
-    });
+  if (!this.mainImageFile) {
+    this.mainImageError = true;
+    return;
   }
+
+  if (this.produtoForm.invalid) {
+    this.produtoForm.markAllAsTouched();
+    return;
+  }
+
+  const formData = this.produtoForm.getRawValue();
+
+  this.produtoService.salvarProduto(
+    formData as ProdutoData,
+    this.mainImageFile,
+    this.additionalImageFiles  
+  ).subscribe({
+    next: () => console.log('Produto salvo com sucesso!'),
+    error: (err) => console.error('Erro ao salvar:', err)
+  });
+}
+
 
   ngOnInit(): void {
     this.produtoForm = this.fb.group({
@@ -108,8 +116,8 @@ export class ProdutoFormComponent implements OnInit {
     }
   }
 
-  private dataNaoPodeSerFutura(control: AbstractControl): ValidationErrors | null {
-    const dataSelecionada = control.value as Date;
+  private dataNaoPodeSerFutura(form: AbstractControl): ValidationErrors | null {
+    const dataSelecionada = form.value as Date;
     if (!dataSelecionada) {
       return null;
     }

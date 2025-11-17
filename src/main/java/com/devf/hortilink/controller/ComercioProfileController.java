@@ -1,11 +1,11 @@
 package com.devf.hortilink.controller;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.devf.hortilink.dto.ComercioDTO;
 import com.devf.hortilink.entity.ComercioProfile;
 import com.devf.hortilink.entity.Foto;
 import com.devf.hortilink.entity.Oferta;
+import com.devf.hortilink.entity.Usuario;
 import com.devf.hortilink.service.ComercioProfileService;
+import com.devf.hortilink.service.UsuarioService;
 
 @RestController
 @RequestMapping("/comercio")
@@ -26,6 +29,9 @@ public class ComercioProfileController {
 
 	@Autowired
 	private ComercioProfileService service;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 	
 	@GetMapping("/listar")
 	public ResponseEntity<List<ComercioProfile>> ListarComercios() {
@@ -35,8 +41,9 @@ public class ComercioProfileController {
 	}
 	
 	@PostMapping("/salvar")
-	public ResponseEntity<ComercioProfile> salvarComercio(@RequestBody ComercioProfile comercio) {
-		ComercioProfile salvo = service.salvar(comercio);
+	public ResponseEntity<ComercioProfile> salvarComercio(@RequestBody ComercioDTO comercio, Principal principal) {
+		Usuario usuario = usuarioService.buscarPorEmail(principal.getName());
+		ComercioProfile salvo = service.salvar(comercio, usuario);
 		
 		URI location = ServletUriComponentsBuilder
 				.fromCurrentRequest()

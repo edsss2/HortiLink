@@ -7,4 +7,5 @@ export interface Usuario {
     nome:string;
     senha:string;
     role:Role | null;
+    cadastroIncompleto?: boolean;
 }
