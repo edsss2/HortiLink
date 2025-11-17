@@ -74,4 +74,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 		
 	}
 
+	@Override
+	public Boolean existeComEmail(String email) {
+		return repository.existsByEmail(email);
+	}
+
 }

@@ -5,6 +5,7 @@ import { LoginResponse } from '../models/login-response.model';
 import { Usuario } from '../models/usuario.model';
 import { AuthTokenStorage } from './auth-token-storage';
 import { environment } from '../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class AuthService {
 
   register(usuario : Usuario) {
     return this.http.post(`${this.apiUrl}/register`, usuario, { responseType: 'text' });
+  }
+
+  isEmailUnico(email : string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/verify?email=${email}`);
   }
 
   logout() {

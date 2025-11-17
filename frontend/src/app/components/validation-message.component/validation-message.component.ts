@@ -24,6 +24,9 @@ export class ValidationMessageComponent {
     'maxlength': 'O valor é muito longo.',
     'min': 'O valor deve ser maior.',
     'pattern': 'O formato está incorreto (ex: deve ser um inteiro).',
+    'senhaInvalida': 'As senhas devem ser iguais.',
+    'emailJaExiste': 'Este email já possui uma conta.',
+    'email': 'O email precisa ser válido',
     'dataFutura': 'A data não pode ser no futuro.',
     'promocaoInvalida': 'O preço promocional deve ser menor que o preço normal.'
   };

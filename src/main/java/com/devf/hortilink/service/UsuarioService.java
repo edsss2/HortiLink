@@ -17,6 +17,7 @@ public interface UsuarioService {
 	Usuario buscarPorEmail(String email);
 	Usuario excluirPorId(Long id);
 	Usuario salvar(Usuario usuario);
+	Boolean existeComEmail(String email);
 	Foto buscarFotoPorId(Long id);
 	void atualizarEndereco(Long id, Endereco endereco);
 	void atualizarFoto(Long id, Foto foto);

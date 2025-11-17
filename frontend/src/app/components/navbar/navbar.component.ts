@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit } from '@angular/core';
 import { Usuario } from '../../models/usuario.model';
 import { UsuarioService } from '../../services/usuario-service';
 import { AuthService } from '../../services/auth-service';
@@ -17,9 +17,11 @@ export class Navbar implements OnInit{
   quantidadeCarrinho = 0;
   isVendedor: boolean = false;
 
-  constructor(private usuarioService: UsuarioService, private authService : AuthService, private carrinhoService : CarrinhoService) {
+  constructor(private usuarioService: UsuarioService, private authService : AuthService, private carrinhoService : CarrinhoService, private elementRef: ElementRef) {
     this.isVendedor = usuarioService.isVendedor();
   }
+
+  public isDropdownOpen = false;
 
   ngOnInit(): void {
     this.usuarioService.currentUser$.subscribe(user => {
@@ -38,7 +40,23 @@ export class Navbar implements OnInit{
     });
   }
 
+  toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation(); // A parte mais importante!
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event): void {
+    const clickedInside = this.elementRef.nativeElement.contains(event.target);
+    
+    if (!clickedInside && this.isDropdownOpen) {
+      this.isDropdownOpen = false;
+    }
+  }
+
   logout() {
-    this.authService.logout();
+    this.isDropdownOpen = false; 
+    this.usuarioService.setCurrentUser(null);
   }
 }

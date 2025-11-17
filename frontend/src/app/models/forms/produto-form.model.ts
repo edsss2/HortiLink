@@ -13,5 +13,4 @@ export interface ProdutoForm {
     quantidade: FormControl<number | null>;
     categoria: FormControl<Categoria | null>;
     unidadeMedida: FormControl<UnidadeMedida | null>;
-
 }   

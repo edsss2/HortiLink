@@ -54,7 +54,7 @@ export class Home implements OnInit {
       tipoVendedor: 'Comercio',
       qtdDisponivel: 20,
 
-      imagemUrl: '/assets/bgHortlink.png'
+      imagemUrl: '/assets/tomate-cereja.jpg'
     },
     {
       id: 2,
@@ -67,7 +67,7 @@ export class Home implements OnInit {
       tipoVendedor: 'Produtor',
       qtdDisponivel: 34,
 
-      imagemUrl: '/assets/bgHortlink.png'
+      imagemUrl: '/assets/alface_crespa.webp'
     },
     {
       id: 3,
@@ -80,7 +80,7 @@ export class Home implements OnInit {
       tipoVendedor: 'Produtor',
       qtdDisponivel: 11,
 
-      imagemUrl: '/assets/bgHortlink.png'
+      imagemUrl: '/assets/cenoura.webp'
     },
     {
       id: 4,
@@ -92,7 +92,7 @@ export class Home implements OnInit {
       unidadeMedida: 'Un',
       tipoVendedor: 'Produtor',
       qtdDisponivel: 2,
-      imagemUrl: '/assets/bgHortlink.png'
+      imagemUrl: '/assets/maca_fuji.jpg'
     }
   ];
 }
