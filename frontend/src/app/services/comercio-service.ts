@@ -12,9 +12,7 @@ export class ComercioService {
 
   constructor(private http: HttpClient) {}
 
-  salvarProduto(produto: Comercio): Observable<any> {
-      const formData = new FormData();
-
-      return this.http.post(`${this.apiUrl}/salvar`, formData);
-    }
+    salvarProduto(produto: Comercio): Observable<any> {
+        return this.http.post(`${this.apiUrl}/salvar`, produto);
+      }
 }

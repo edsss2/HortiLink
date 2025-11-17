@@ -16,6 +16,7 @@ import { CarrinhoService } from '../../services/carrinho-service';
 })
 export class Home implements OnInit {
 
+  produtos: Produto[] = [];
   constructor(private usuarioService: UsuarioService, private produtoService: ProdutoService, private carrinhoService: CarrinhoService) { }
 
   ngOnInit(): void {
@@ -41,58 +42,5 @@ export class Home implements OnInit {
     this.carrinhoService.adicionarProduto(produto);
   }
 
-  // Esta é a sua lista de produtos mocados
-  produtos: Produto[] = [
-    {
-      id: 1,
-      nome: 'Tomate Cereja Orgânico',
-      nomeComercio: 'Fazenda Sol Nascente',
-      valor: '8,50',
-      promocao: '7,99', // Deixe vazio "" se não houver promoção
-      organico: true,
-      unidadeMedida: 'Bandeja',
-      tipoVendedor: 'Comercio',
-      qtdDisponivel: 20,
-
-      imagemUrl: '/assets/tomate-cereja.jpg'
-    },
-    {
-      id: 2,
-      nome: 'Alface Crespa Hidropônica',
-      nomeComercio: 'Verde Vale Hortaliças',
-      valor: '3,50',
-      promocao: '', // Sem promoção
-      organico: false,
-      unidadeMedida: 'Un',
-      tipoVendedor: 'Produtor',
-      qtdDisponivel: 34,
-
-      imagemUrl: '/assets/alface_crespa.webp'
-    },
-    {
-      id: 3,
-      nome: 'Cenoura',
-      nomeComercio: 'Sítio Terra Boa',
-      valor: '4,00',
-      promocao: '3,49',
-      organico: false,
-      unidadeMedida: 'g',
-      tipoVendedor: 'Produtor',
-      qtdDisponivel: 11,
-
-      imagemUrl: '/assets/cenoura.webp'
-    },
-    {
-      id: 4,
-      nome: 'Maçã Fuji',
-      nomeComercio: 'Pomar Irmãos Silva',
-      valor: '1,50',
-      promocao: '',
-      organico: true,
-      unidadeMedida: 'Un',
-      tipoVendedor: 'Produtor',
-      qtdDisponivel: 2,
-      imagemUrl: '/assets/maca_fuji.jpg'
-    }
-  ];
+ 
 }

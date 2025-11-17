@@ -10,13 +10,13 @@ import { catchError } from "rxjs/operators";
 })
 export class AuthInterceptor implements HttpInterceptor {
 
-    private localStorageToken = inject(AuthTokenStorage); 
+    private localStorageToken = inject(AuthTokenStorage);
     private router = inject(Router);
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         // ----------- 1) ROTAS QUE NÃO RECEBEM TOKEN -----------
-        const skipAuth = 
+        const skipAuth =
             req.url.includes('/auth/login') ||
             req.url.includes('/auth/register') ||
             req.url.includes('/auth/verify');
@@ -27,7 +27,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
         // ----------- 2) ROTAS COM TOKEN NORMALMENTE -----------
         const token = this.localStorageToken.get();
-
         let authReq = req;
 
         if (token) {
@@ -36,20 +35,6 @@ export class AuthInterceptor implements HttpInterceptor {
             });
         }
 
-        // ----------- 3) TRATAR TOKEN EXPIRADO / INVALIDO -----------
-        return next.handle(authReq).pipe(
-            catchError((error: HttpErrorResponse) => {
-
-                if (error.status === 401 || error.status === 403) {
-
-                    console.warn("🔐 Token inválido, expirado ou corrompido → limpando e redirecionando...");
-
-                    this.localStorageToken.clear();
-                    this.router.navigate(['/login']);
-                }
-
-                return throwError(() => error);
-            })
-        );
+        return next.handle(authReq);
     }
 }

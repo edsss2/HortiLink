@@ -65,7 +65,7 @@ public class Produto {
 	
 	public Foto getFotoPrimaria() {
 	    return this.fotos.stream()
-	        .filter(f -> f.getOrdemExibicao() == 1)
+	        .filter(f -> f.getOrdemExibicao() == 0)
 	        .findFirst()
 	        .orElse(null);
 	}

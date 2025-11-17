@@ -5,7 +5,7 @@ export interface Usuario {
     telefone:string;
     email:string;
     nome:string;
-    senha:string;
     role:Role | null;
     cadastroIncompleto?: boolean;
+    comercioProfileId?: number;
 }

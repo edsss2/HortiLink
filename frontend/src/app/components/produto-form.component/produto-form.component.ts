@@ -53,6 +53,7 @@ export class ProdutoFormComponent implements OnInit {
 onSubmit() {
   this.mainImageError = false;
 
+  // Bloco de validação (sem alterações)
   if (!this.mainImageFile) {
     this.mainImageError = true;
     return;
@@ -70,7 +71,20 @@ onSubmit() {
     this.mainImageFile,
     this.additionalImageFiles  
   ).subscribe({
-    next: () => console.log('Produto salvo com sucesso!'),
+    next: () => {
+      console.log('Produto salvo com sucesso!');
+      
+
+
+      alert('Produto cadastrado com sucesso!');
+
+      this.produtoForm.reset();
+
+      this.mainImageFile = null;
+      this.additionalImageFiles = [];
+      this.mainImageError = false; 
+
+    },
     error: (err) => console.error('Erro ao salvar:', err)
   });
 }

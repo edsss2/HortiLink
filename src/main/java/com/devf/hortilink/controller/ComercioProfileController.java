@@ -1,10 +1,10 @@
 package com.devf.hortilink.controller;
 
-import java.net.URI;
 import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.devf.hortilink.dto.ComercioDTO;
 import com.devf.hortilink.entity.ComercioProfile;
@@ -41,17 +40,11 @@ public class ComercioProfileController {
 	}
 	
 	@PostMapping("/salvar")
-	public ResponseEntity<ComercioProfile> salvarComercio(@RequestBody ComercioDTO comercio, Principal principal) {
+	public ResponseEntity<Void> salvarComercio(@RequestBody ComercioDTO comercio, Principal principal) {
 		Usuario usuario = usuarioService.buscarPorEmail(principal.getName());
 		ComercioProfile salvo = service.salvar(comercio, usuario);
 		
-		URI location = ServletUriComponentsBuilder
-				.fromCurrentRequest()
-				.path("/{id}")
-				.buildAndExpand(salvo.getId())
-				.toUri();
-		
-		return ResponseEntity.created(location).body(salvo);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
 	@GetMapping("/{id}")

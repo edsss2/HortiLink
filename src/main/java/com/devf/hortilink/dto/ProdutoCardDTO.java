@@ -25,6 +25,7 @@ public class ProdutoCardDTO {
 		Produto produto = oferta.getProduto();
 		ComercioProfile comercio = oferta.getComercio();
 		
+		
 		dto.setId(produto.getId());
 		dto.setNome(produto.getNome());
 		dto.setNomeComercio(comercio.getNomeComercio());
@@ -33,8 +34,9 @@ public class ProdutoCardDTO {
 		dto.setOrganico(produto.getCertificadoOrganico());
 		dto.setUnidadeMedida(produto.getUnidadeMedida().getSimbolo());
 		dto.setTipoVendedor(comercio.getUser().getRole().getNome());
-		dto.setQuantidadeDisponivel(oferta.getEstoqueAtual()	);
-		dto.setImageUrl(produto.getFotoPrimaria().getCaminhoArquivo());
+		dto.setQuantidadeDisponivel(oferta.getEstoqueAtual());
+		String caminhoDaFoto = produto.getFotoPrimaria().getCaminhoArquivo();
+		dto.setImageUrl("http://localhost:8080/uploads/" + caminhoDaFoto);
 		
 		return dto;
 	}

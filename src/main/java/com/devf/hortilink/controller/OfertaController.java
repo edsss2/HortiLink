@@ -33,6 +33,9 @@ public class OfertaController {
 	@GetMapping("/listar")
 	public ResponseEntity<List<ProdutoCardDTO>> Listar() {
 		List<ProdutoCardDTO> produtosCard = service.transformOfertas(service.listarTodos());
+		for(ProdutoCardDTO pcd : produtosCard) {
+			System.out.println(pcd.getImageUrl());
+		}
 		return ResponseEntity.ok(produtosCard);
 	}
 
@@ -55,7 +58,7 @@ public class OfertaController {
 	@PostMapping("/salvar")
 	public ResponseEntity<Void> salvar(@RequestPart("produto") ProdutoFormDTO produtoData, 
 	        @RequestPart("imagemPrincipal") MultipartFile imagemPrincipal,
-	        @RequestPart("imagensAdicionais") List<MultipartFile> imagensAdicionais,
+	        @RequestPart(value = "imagensAdicionais", required = false) List<MultipartFile> imagensAdicionais,
 	        Principal principal) {
 		String emailUsuario = principal.getName();
 		

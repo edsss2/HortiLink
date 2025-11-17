@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devf.hortilink.dto.UsuarioDTO;
 import com.devf.hortilink.entity.Usuario;
-import com.devf.hortilink.enums.Role;
 import com.devf.hortilink.service.UsuarioService;
 import com.devf.hortilink.util.JwtUtil;
 
@@ -40,12 +40,9 @@ public class AuthController {
             String token = jwtUtil.generateToken(request.getEmail());
             Usuario usuarioLogado = usuarioService.buscarPorEmail(request.getEmail());
             
-            boolean isVendedor = usuarioLogado.getRole() == Role.COMERCIO || usuarioLogado.getRole() == Role.PRODUTOR;
-            if(isVendedor && usuarioLogado.getComercioProfile() == null) {
-            	usuarioLogado.cadastroIncompleto = true;
-            }
+            UsuarioDTO usuarioLogadoDto = UsuarioDTO.fromEntity(usuarioLogado);
            
-            return ResponseEntity.ok(new AuthResponse(token, usuarioLogado));
+            return ResponseEntity.ok(new AuthResponse(token, usuarioLogadoDto));
 
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário ou senha inválidos");
@@ -76,8 +73,8 @@ class AuthRequest {
 
 class AuthResponse {
     private String token;
-    private Usuario usuario;
-    public AuthResponse(String token, Usuario usuario){this.token = token;this.usuario = usuario;}
+    private UsuarioDTO usuarioDto;
+    public AuthResponse(String token, UsuarioDTO dto){this.token = token;this.usuarioDto = dto;}
     public String getToken(){return token;}
-    public Usuario getUsuario() {return usuario;}
+    public UsuarioDTO getUsuario() {return usuarioDto;}
 }

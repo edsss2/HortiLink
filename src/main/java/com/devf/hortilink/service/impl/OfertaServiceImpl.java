@@ -1,6 +1,5 @@
 package com.devf.hortilink.service.impl;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +25,8 @@ import com.devf.hortilink.repository.ProdutoRepository;
 import com.devf.hortilink.service.FotoService;
 import com.devf.hortilink.service.OfertaService;
 import com.devf.hortilink.service.UsuarioService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class OfertaServiceImpl implements OfertaService {
@@ -75,47 +76,53 @@ public class OfertaServiceImpl implements OfertaService {
 	}
 
 	@Override
+	@Transactional 
 	public void salvarNovoProduto(String emailUsuario, ProdutoFormDTO formData, MultipartFile imagemPrincipal,
-			List<MultipartFile> imagensAdicionais) {
-		Usuario usuario = userService.buscarPorEmail(emailUsuario);
-		ComercioProfile comercioProfile = usuario.getComercioProfile();
+	        List<MultipartFile> imagensAdicionais) {
+	    Usuario usuario = userService.buscarPorEmail(emailUsuario);
+	    ComercioProfile comercioProfile = usuario.getComercioProfile();
 
-		Produto produto = new Produto();
-		produto.setNome(formData.getNome());
-		produto.setDescricao(formData.getDescricao());
-		produto.setDataColheita(formData.getDataColheira());
-		produto.setCertificadoOrganico(formData.getIsOrganico());
+	    Produto produto = new Produto();
+	    produto.setNome(formData.getNome());
+	    produto.setDescricao(formData.getDescricao());
+	    produto.setDataColheita(formData.getDataColheira());
+	    produto.setCertificadoOrganico(formData.getIsOrganico());
 
-		Categoria categoriaEnum = Categoria.valueOf(formData.getCategoria());
-		UnidadeMedida unMedidaEnum = UnidadeMedida.valueOf(formData.getUnidadeMedida());
+	    Categoria categoriaEnum = Categoria.valueOf(formData.getCategoria());
+	    UnidadeMedida unMedidaEnum = UnidadeMedida.valueOf(formData.getUnidadeMedida());
 
-		produto.setCategoria(categoriaEnum);
-		produto.setUnidadeMedida(unMedidaEnum);
+	    produto.setCategoria(categoriaEnum);
+	    produto.setUnidadeMedida(unMedidaEnum);
 
-		Oferta oferta = new Oferta();
-		oferta.setComercio(comercioProfile);
-		oferta.setValor(formData.getPreco());
-		oferta.setPromocao(formData.getPromocao());
-		oferta.setEstoqueAtual(BigDecimal.valueOf(formData.getQuantidade()));
+	    Produto produtoSalvo = produtoRepository.save(produto);
 
-		Produto produtoSalvo = produtoRepository.save(produto);
+	    Oferta oferta = new Oferta();
+	    oferta.setComercio(comercioProfile);
+	    oferta.setValor(formData.getPreco());
+	    oferta.setPromocao(formData.getPromocao());
+	    oferta.setEstoqueAtual(BigDecimal.valueOf(formData.getQuantidade()));
 
-		List<Foto> fotosSalvas = new ArrayList<>();
+	    oferta.setProduto(produtoSalvo);
 
-		Foto foto = fotoService.salvarFotoProduto(imagemPrincipal, produtoSalvo, 0);
-		fotosSalvas.add(foto);
+	    List<Foto> fotosSalvas = new ArrayList<>();
+	    Foto foto = fotoService.salvarFotoProduto(imagemPrincipal, produtoSalvo, 0);
+	    fotosSalvas.add(foto);
 
-		int ordem = 1;
-		for (MultipartFile file : imagensAdicionais) {
-			if (file != null && !file.isEmpty()) {
-				Foto fotoAdicional = fotoService.salvarFotoProduto(file, produtoSalvo, ordem++);
-				fotosSalvas.add(fotoAdicional);
-			}
-		}
+	    int ordem = 1;
+	    if (imagensAdicionais != null) {
+	        for (MultipartFile file : imagensAdicionais) {
+	            if (file != null && !file.isEmpty()) {
+	                fotosSalvas.add(
+	                    fotoService.salvarFotoProduto(file, produtoSalvo, ordem++)
+	                );
+	            }
+	        }
+	    }
 
-		produtoSalvo.setFotos(fotosSalvas);
-
-		repository.save(oferta);
+	    repository.save(oferta);
+	    
+	    produtoSalvo.setFotos(fotosSalvas);
+	    produtoRepository.save(produtoSalvo); 
 
 	}
 

@@ -30,10 +30,7 @@ public class Usuario {
 
 	private Role role;
 	
-	@Transient
-	public Boolean cadastroIncompleto = false;
-	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "endereco_id", nullable = true)
 	private Endereco endereco;
 	

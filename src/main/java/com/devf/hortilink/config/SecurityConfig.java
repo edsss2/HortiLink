@@ -5,6 +5,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,7 +30,7 @@ public class SecurityConfig {
     private JwtAuthenticationFilter jwtAuthFilter;
 
 	@Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
             .csrf(csrf -> csrf.disable())
             .cors(withDefaults())
@@ -40,9 +41,13 @@ public class SecurityConfig {
             )
             
             .authorizeHttpRequests(auth -> auth
+                // Rotas públicas que você já tinha:
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
+                
+                .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
+                
                 .anyRequest().authenticated()
             )
             .headers(headers -> headers
@@ -50,7 +55,6 @@ public class SecurityConfig {
             )
             .userDetailsService(authService)
             
-            // 5. ADICIONE SEU FILTRO JWT ANTES DO FILTRO PADRÃO
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class) 
             
             .build();

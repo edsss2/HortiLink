@@ -6,9 +6,11 @@ import { ComercioForm } from '../../models/forms/comercio-form.model';
 import { ValidationMessageComponent } from '../../components/validation-message.component/validation-message.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective } from 'ngx-mask';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ComercioService } from '../../services/comercio-service';
 import { Comercio } from '../../models/comercioData';
+import { UsuarioService } from '../../services/usuario-service';
+import { Usuario } from '../../models/usuario.model';
 
 @Component({
   selector: 'app-completar-cadastro',
@@ -21,23 +23,32 @@ export class CompletarCadastro implements OnInit {
   public comercioForm!: FormGroup<ComercioForm>;
   private fb = inject(NonNullableFormBuilder);
 
-  constructor(private comercioService: ComercioService) { }
+  usuario: Usuario | null;
+
+  constructor(private comercioService: ComercioService, private router: Router, private usuarioService : UsuarioService) {
+    this.usuario = this.usuarioService.getCurrentUser();
+   }
 
   onSubmit() {
     console.log("entrou no submit")
     if (this.comercioForm.invalid) {
-      console.log("Formuario invalido")
-      this.logValidationErrors();
       this.comercioForm.markAllAsTouched();
       return;
     }
 
     const formData = this.comercioForm.getRawValue();
 
-    this.comercioService.salvarProduto(formData as Comercio).subscribe({
-      next: () => console.log('Produto salvo com sucesso!'),
-      error: (err) => console.error('Erro ao salvar:', err)
-    });
+      this.comercioService.salvarProduto(formData as Comercio).subscribe({
+        next: () => {
+          console.log('Cadastro Completo!');
+          if(this.usuario) {
+            this.usuario!.cadastroIncompleto = false;
+          }
+          this.usuarioService.setCurrentUser(this.usuario);
+          this.router.navigate(['/painel/dashboard']);
+        },
+        error: (err) => console.error('Erro ao salvar:', err)
+      });
 
   }
 
@@ -129,31 +140,5 @@ export class CompletarCadastro implements OnInit {
     { sigla: 'TO', nome: 'Tocantins' }
   ];
 
-  /**
-   * Função de debug: Itera por todos os campos do formulário
-   * e imprime os erros de validação no console.
-   */
-  logValidationErrors() {
-    console.log("--- Verificando Erros de Validação ---");
-    
-    // Pega todas as chaves (nomes dos campos) do seu form
-    Object.keys(this.comercioForm.controls).forEach(key => {
-      
-      // Pega o controle (o campo em si)
-      const control = this.comercioForm.get(key);
-      
-      // Verifica se o campo existe e se está inválido
-      if (control && control.invalid) {
-        
-        // control.errors é um objeto JSON com os erros
-        // Ex: { required: true }
-        // Ex: { pattern: { requiredPattern: '^[0-9]{8}$', actualValue: '123' } }
-        // Ex: { min: { min: 1, actual: 0 } }
-        
-        console.log(`❌ Erro no campo [${key}]:`, control.errors);
-      }
-    });
-    
-    console.log("-----------------------------------------");
-  }
+
 }
